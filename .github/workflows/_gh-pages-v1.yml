@@ -1,0 +1,60 @@
+# This is based on the official workflow from the MkDocs Material docs, available here:
+# https://squidfunk.github.io/mkdocs-material/publishing-your-site/#with-github-actions
+# Note that this use the classic Pages approach of generating a new `gh-pages` branch, and building asynchronously
+
+name: Build and Push to 'gh-pages' Branch
+
+on:
+  push:
+    branches: ["replace_with_main_if_in_use"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Edit mkdocs.yml
+        run: |
+          year=$(date +'%Y')
+          sed -i "s/# site_name: \"\"/site_name: \"Template\"/" ./src/template/mkdocs.yml
+          sed -i "s/# site_description: \"\"/site_description: \"Served template of InitDocs\"/" ./src/template/mkdocs.yml
+          sed -i "s/# site_author: \"\"/site_author: \"Martin Johannes Nilsen\"/" ./src/template/mkdocs.yml
+          sed -i "s/# copyright: \"\"/copyright: \"Copyright \&copy; $year Martin Johannes Nilsen\"/" ./src/template/mkdocs.yml
+          sed -i "s|# site_url: \"\"|site_url: \"https://martinjohannesnilsen.github.io/initdocs/\"|" ./src/template/mkdocs.yml
+          cat ./src/template/mkdocs.yml
+
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+
+      - run: pip install -r ./src/template/requirements.txt
+
+      - run: |
+          cd ./src/template
+          mkdocs gh-deploy --force

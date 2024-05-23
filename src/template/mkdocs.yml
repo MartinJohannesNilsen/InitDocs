@@ -1,0 +1,175 @@
+# Project info
+# site_name: ""
+# site_description: ""
+# site_author: ""
+# copyright: ""
+# site_url: ""
+
+# Repository
+# repo_url: ""
+# repo_name: ""
+
+# Extra variables
+extra:
+  # Version numbers
+  # version: ""
+  # Social links
+  social:
+  generator: false # Generate the "Made by MkDocs Material"
+  banner_message: "This is a rendered version of the entire documentation for printing or exporting to pdf. In your browser, navigate to the printing pane (typically `ctrl/cmd + p`) to print or export as pdf."
+  initdocs: 1.0.0
+
+# Theme configuration
+theme:
+  name: material
+  favicon: _internal/icon/favicon.ico
+  # logo: _internal/icon/favicon.ico # Using icon/logo instead
+  icon:
+    logo: material/bookshelf # Documentation icon
+    annotation: material/plus-circle # material/arrow-right-circle or material/circle-medium
+  font:
+    text: Noto Sans
+    code: Roboto Mono
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      accent: light blue
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      accent: light blue
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+  features:
+    - navigation.tracking # Automatic anchor update in url
+    - navigation.instant # Instant loading on link clicks if site_url is set
+    - navigation.instant.progress # Progress indicator
+    - navigation.footer # Previous and next arrows in footer
+    # - navigation.tabs # Render a menu with top-level sections below the header on large screens
+    # - navigation.tabs.stricky # The menu bar from content.tabs remains sticky
+    # - navigation.sections # Sections instead of toggle headers in toc
+    # - navigation.expand # Expand all collapsible subsections in left sidebar
+    - navigation.indexes # Sections can be documents as well, e.g. for overview pages
+    # - toc.integrate # Integrate toc into left sidebar for navigation
+    - toc.follow # Automatically scroll toc sidebar for showing active anchor
+    - search.suggest # Suggest likeliest word completion in search
+    # - search.highlight # Highlight all occurrences after following a search link
+    - search.share # Render share button for copying URL to clipboard
+    - navigation.top # Back-to-top button
+    - content.code.copy # Render a copy button in code blocks
+    - content.code.annotate # Automatically render annotations in code blocks (instead of { .<language> .annotate } attribute list per code block)
+    - content.tabs.link # All equal content tabs are linked, and will switch together
+    - content.tooltips # Improved tooltips
+
+# Stylesheet and Javascript
+extra_css:
+  - _internal/stylesheets/extra.css
+extra_javascript:
+  - _internal/scripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+# Extensions
+markdown_extensions:
+  - toc:
+      permalink: "#" # 'true' for default, but we can define symbol
+  - admonition # Callouts
+  - pymdownx.details # Callouts
+  - abbr # Tooltips
+  - attr_list # Images, grids, icons, tooltips and buttons
+  - md_in_html # Images and grids
+  - pymdownx.tabbed: # Tabbing
+      alternate_style: true
+  - pymdownx.highlight: # Code highlighting
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite # Code highlighting
+  - pymdownx.snippets # Code highlighting and tooltips
+  - pymdownx.superfences # Annotations++
+  - pymdownx.critic # Formatting
+  - pymdownx.caret # Formatting
+  - pymdownx.keys # Formatting
+  - pymdownx.mark # Formatting
+  - pymdownx.tilde # Formatting
+  - pymdownx.emoji: # Emojies and Icons (material design, fontawesome, octicons, simple icons)
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - def_list # Lists
+  - pymdownx.tasklist: # Lists
+      custom_checkbox: true
+  - tables # Tables
+  - footnotes # Footnotes
+  - pymdownx.arithmatex: # MathJax (LaTeX support)
+      generic: true
+
+# Plugins
+plugins:
+  - offline
+  - search
+  - git-revision-date-localized:
+      fallback_to_build_date: true
+  - table-reader:
+      base_path: "docs_dir" # "config_dir" or "docs_dir"
+      data_path: "." # Define base path to a folder to look in, default is "."
+      search_page_directory: True
+      allow_missing_files: False
+      select_readers:
+        - read_csv
+        - read_json
+        - read_yaml
+        - read_excel
+  - awesome-pages:
+      filename: .pages
+      collapse_single_pages: true
+  - minify:
+      minify_html: true
+  - kroki:
+
+  #- glightbox: # image lightbox
+  #    touchNavigation: true
+  #    loop: false
+  #    effect: zoom
+  #    slide_effect: slide
+  #    width: 100%
+  #    height: auto
+  #    zoomable: true
+  #    draggable: true
+  #    skip_classes:
+  #      - skip-lightbox
+  #    auto_caption: false
+  #    caption_position: bottom
+  #    #background: rgba(255,255,255,0.5)
+  #    background: white
+  #    shadow: true
+
+  # Alternative to tex pdfs (enhanced rendering support)
+  # Print site render a page in your browser with all pages in one tree at /print_page.html
+  # Should be placed in the bottom for correct generation
+  - print-site:
+      add_to_navigation: false
+      print_page_title: "Print Site"
+      # Helpful banner for explaining how to print (will be removed from final pdf)
+      add_print_site_banner: true
+      print_site_banner_template: "docs/_internal/templates/custom_banner.tpl"
+      # Cover page
+      add_cover_page: true
+      cover_page_template: "docs/_internal/templates/custom_cover_page.tpl"
+      # Table of contents
+      add_table_of_contents: true
+      toc_title: "Table of Contents"
+      toc_depth: 3
+      # Content-related
+      add_full_urls: false # Translates "[google](https://google.com)", rendered as "google", into "google (https://google.com)"
+      enumerate_headings: false
+      enumerate_headings_depth: 6
+      enumerate_figures: true
+      path_to_pdf: "pdf/documentation.pdf"
+      include_css: true
+      enabled: true
+      exclude:

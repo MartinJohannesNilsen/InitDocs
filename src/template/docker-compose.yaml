@@ -1,0 +1,22 @@
+version: "1.0"
+
+services:
+  docs-base:
+    build: .
+    image: initdocs
+    entrypoint: ["python", "-m", "mkdocs"]
+    volumes:
+      - ./:/documentation
+    container_name: docs_base
+
+  docs-build:
+    extends: docs-base
+    command: ["build"]
+    container_name: docs_build
+
+  docs-serve:
+    extends: docs-base
+    ports:
+      - "8000:8000"
+    command: ["serve", "-a", "0.0.0.0:8000"]
+    container_name: docs_serve
