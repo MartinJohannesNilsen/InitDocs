@@ -1,0 +1,13 @@
+# Main
+mkdocs
+mkdocs-material # Material theming and extensions
+# mkdocs-material[imaging] # Imaging extras for social plugin
+
+# Plugins
+mkdocs-awesome-pages-plugin # Enhanced configuration of page structuring
+mkdocs-git-revision-date-localized-plugin # Revision date for each page
+mkdocs-minify-plugin # Minify built HTML
+mkdocs-glightbox # Lightbox
+mkdocs-print-site-plugin # Print page
+mkdocs-kroki-plugin # Diagrams through Kroki
+mkdocs-table-reader-plugin # Read table from file (.csv, .xlsx, .yaml, .tsv, .json)

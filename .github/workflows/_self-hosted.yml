@@ -1,0 +1,85 @@
+# Neither this approach seem to build it correctly. The output differs when building the site in CI vs locally.
+
+name: Build and Deploy to Public Server
+
+on:
+  push:
+    branches: ["replace_with_main_if_in_use"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Job for building the documentation
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Edit mkdocs.yml
+        run: |
+          year=$(date +'%Y')
+          sed -i "s/# site_name: \"\"/site_name: \"Template\"/" ./src/template/mkdocs.yml
+          sed -i "s/# site_description: \"\"/site_description: \"Served template of InitDocs\"/" ./src/template/mkdocs.yml
+          sed -i "s/# site_author: \"\"/site_author: \"Martin Johannes Nilsen\"/" ./src/template/mkdocs.yml
+          sed -i "s/# copyright: \"\"/copyright: \"Copyright \&copy; $year Martin Johannes Nilsen\"/" ./src/template/mkdocs.yml
+          sed -i "s|# site_url: \"\"|site_url: \"https://initdocs.mjntech.dev\"|" ./src/template/mkdocs.yml
+          cat ./src/template/mkdocs.yml
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.11.0
+
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+
+      - run: pip install -r ./src/template/requirements.txt
+
+      - run: |
+          cd ./src/template
+          mkdocs build
+
+      - name: Upload built docs
+        uses: actions/upload-artifact@v3
+        with:
+          name: built-docs
+          path: ./src/template/site
+
+  # Job for deploying to GitHub Pages
+  deploy:
+    needs: build
+    environment:
+      name: hostinger
+      url: https://initdocs.mjntech.dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download built docs
+        uses: actions/download-artifact@v3
+        with:
+          name: built-docs
+          path: .
+
+      - name: Print content
+        run: |
+          ls -a
+
+      - name: Copy files via SCP
+        env:
+          SERVER_IP: ${{ secrets.HOSTED_SERVER_IP }}
+          SERVER_USER: ${{ secrets.HOSTED_SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.HOSTED_SERVER_PASSWORD }}
+        run: |
+          sshpass -p $SERVER_PASSWORD scp -o StrictHostKeyChecking=no -r * $SERVER_USER@$SERVER_IP:/var/www/initdocs.mjntech.dev/

@@ -1,0 +1,88 @@
+# This was actually sleeker as no extra branches was made, and is supposedly the better newer approach according to GitHub.
+# I do experience the template not being rendered correctly, some CSS/JSS going wrong. Have no issues with this locally, and tried other hosting services - neither reproduced there.
+# Solution: Skip GitHub Pages and host using own public server
+
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["replace_with_main_if_in_use"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Job for building the documentation
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Edit mkdocs.yml
+        run: |
+          year=$(date +'%Y')
+          sed -i "s/# site_name: \"\"/site_name: \"Template\"/" ./src/template/mkdocs.yml
+          sed -i "s/# site_description: \"\"/site_description: \"Served template of InitDocs\"/" ./src/template/mkdocs.yml
+          sed -i "s/# site_author: \"\"/site_author: \"Martin Johannes Nilsen\"/" ./src/template/mkdocs.yml
+          sed -i "s/# copyright: \"\"/copyright: \"Copyright \&copy; $year Martin Johannes Nilsen\"/" ./src/template/mkdocs.yml
+          sed -i "s|# site_url: \"\"|site_url: \"https://martinjohannesnilsen.github.io/initdocs/\"|" ./src/template/mkdocs.yml
+          cat ./src/template/mkdocs.yml
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build and run docs-build
+        run: |
+          cd ./src/template
+          docker compose up docs-build
+
+      - name: Upload built docs
+        uses: actions/upload-artifact@v3
+        with:
+          name: built-docs
+          path: ./src/template/site
+
+  # Job for deploying to GitHub Pages
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download built docs
+        uses: actions/download-artifact@v3
+        with:
+          name: built-docs
+          path: ./src/template/site
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./src/template/site"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
