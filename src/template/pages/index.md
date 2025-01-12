@@ -16,7 +16,7 @@ This project was generated with [InitDocs](https://github.com/MartinJohannesNils
 
 ### General
 
-The documentation is rendered based on the markdown files found in the `docs` folder, located at the same level as the configuration file named `mkdocs.yaml`. To get started writing pages, it could be beneficial to take a look at the page for [Referencere Implementations](/section1.reference/index.html), which describes the plethora of components available, and code examples of how to utilize them. Finally, it is important that each markdown file starts with a `h1` header (`# <header>`) for successful rendering.
+The documentation is rendered based on the markdown files found in the `pages` folder, located at the same level as the configuration file named `mkdocs.yaml`. To get started writing pages, it could be beneficial to take a look at the page for [Referencere Implementations](/section1.reference/index.html), which describes the plethora of components available, and code examples of how to utilize them. Finally, it is important that each markdown file starts with a `h1` header (`# <header>`) for successful rendering.
 
 ### Structure
 
@@ -57,7 +57,7 @@ The process of building and serving this documentation has been made quite simpl
 
 ##### Building
 
-If you want to build the project into static files, you can utilize the service `docs-build`. Before running the command, you should ensure that your working directory is set to the parent of your docs folder, where the `docker-compose.yaml` also exists. To verify, print `ls` in your terminal and these should be among the listed items. To build, we can use the docker service by running the following command:
+If you want to build the project into static files, you can utilize the service `docs-build`. Before running the command, you should ensure that your working directory is set to the documentation project being where you find `docker-compose.yaml`, `mkdocs.yml` and the `pages` folder. To verify, print `ls` in your terminal and these should be among the listed items. To build, we can use the docker service by running the following command:
 
 ```
 docker compose up docs-build
@@ -72,7 +72,7 @@ When built, the `index.html` file inside this directory can be served, for examp
 
 ##### Serving
 
-It is also possible to serve the project with a hot-reloading server. This means that on every change in the `mkdocs.yaml` file or `docs` folder, the docs will reload. To serve, run one of the two commands below. The `-d` flag stands for `detached` mode, which means that it will run in the background without printing terminal output. If you want to see the terminal output, simply skip the flag.
+It is also possible to serve the project with a hot-reloading server. This means that on every change in the `mkdocs.yaml` file or `pages` folder, the docs will reload. To serve, run one of the two commands below. The `-d` flag stands for `detached` mode, which means that it will run in the background without printing terminal output. If you want to see the terminal output, simply skip the flag.
 
 ```bash
 # Serve in detached mode
@@ -140,7 +140,7 @@ bash generate_pdf.sh
 
 ## Project Layout
 
-    docs/
+    pages/
         _internal/         # Internal files
         assets/            # Media such as images, SVGs, etc.
         index.md           # The documentation homepage

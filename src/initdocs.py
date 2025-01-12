@@ -85,7 +85,7 @@ class CSS_COLOR:
 TEMPLATE_PATH = Path(os_path_abspath(__file__)).parent / "template"
 DEFAULT_NAME = "docs"
 CONFIG_FILE = Path("mkdocs.yml")
-CSS_FILE = Path("docs") / "_internal" / "stylesheets" / "extra.css"
+CSS_FILE = Path("pages") / "_internal" / "stylesheets" / "extra.css"
 DEFAULT_QMARK = "?"
 INDENTS = 2
 SOCIAL_LINK_REQUIRED_FIELDS = ["name", "link", "icon"]
@@ -235,8 +235,8 @@ def _copy_template(destination_path: Path, overwrite: bool = True, only_config: 
             if only_config:
                 if os_path_exists(destination_path / CONFIG_FILE):
                     remove(destination_path / CONFIG_FILE)
-                if os_path_exists(destination_path / "docs" / "_internal"):
-                    rmtree(destination_path / "docs" / "_internal")
+                if os_path_exists(destination_path / "pages" / "_internal"):
+                    rmtree(destination_path / "pages" / "_internal")
             else:
                 rmtree(destination_path)
         else:
@@ -246,10 +246,10 @@ def _copy_template(destination_path: Path, overwrite: bool = True, only_config: 
     # Copy selected template to destination
     if only_config:
         # Make directory
-        (destination_path / "docs").mkdir(parents=True, exist_ok=True)
-        # Copy only config and docs/_internal
+        (destination_path / "pages").mkdir(parents=True, exist_ok=True)
+        # Copy only config and pages/_internal
         copy(TEMPLATE_PATH / CONFIG_FILE, destination_path / CONFIG_FILE)
-        copytree(TEMPLATE_PATH / "docs" / "_internal", destination_path / "docs" / "_internal")
+        copytree(TEMPLATE_PATH / "pages" / "_internal", destination_path / "pages" / "_internal")
     else:
         copytree(TEMPLATE_PATH, destination_path)
 
@@ -550,8 +550,8 @@ def main(path: Path, dir_name: str, print_config: bool):
 
         # Decide whether to overwrite all, or just config file and _internal
         # Defaults to full initialization
-        # TODO should overwrite everything except docs folder
-        overwrite_docs = "Full initialization"
+        # TODO should overwrite everything except pages folder
+        overwrite_pages = "Full initialization"
         if exists:
             print("")
             overwrite = questionary_confirm(message=f"[Warning] A directory seems to exist at '{directory_path}', but it is not a complete MkDocs project. Do you want to overwrite?",
@@ -563,10 +563,10 @@ def main(path: Path, dir_name: str, print_config: bool):
 
             print("")
             if os_path_exists(directory_path / CONFIG_FILE.name):
-                overwrite_docs = questionary_select("Do you want to keep docs, or initialize the project from scratch?",
-                                                    choices=["Keep my work in docs", "Full initialization"],
-                                                    qmark=DEFAULT_QMARK, style=custom_style, use_arrow_keys=True, use_jk_keys=True,
-                                                    instruction="(Use arrow keys or j/k to move)").unsafe_ask()
+                overwrite_pages = questionary_select("Do you want to keep current pages, or initialize the project from scratch?",
+                                                     choices=["Keep my current documentation", "Full initialization"],
+                                                     qmark=DEFAULT_QMARK, style=custom_style, use_arrow_keys=True, use_jk_keys=True,
+                                                     instruction="(Use arrow keys or j/k to move)").unsafe_ask()
             else:
                 rmtree(directory_path)
 
@@ -575,7 +575,7 @@ def main(path: Path, dir_name: str, print_config: bool):
         metadata = prompt_for_key_values(PROJECT_DETAILS)
 
         # Copy template
-        _copy_template(destination_path=directory_path, overwrite=True, only_config=overwrite_docs == "Keep my work in docs")
+        _copy_template(destination_path=directory_path, overwrite=True, only_config=overwrite_pages == "Keep my current documentation")
 
         # Write metadata
         write_key_values(file_path=directory_path / CONFIG_FILE, fields=metadata)
@@ -946,7 +946,7 @@ def main(path: Path, dir_name: str, print_config: bool):
 
                 if action == "Reset configuration":
                     print("")
-                    overwrite = questionary_confirm(message="[Warning] This will overwrite the 'mkdocs.yml' and 'docs/_internal'. Are you sure?",
+                    overwrite = questionary_confirm(message="[Warning] This will overwrite the 'mkdocs.yml' and 'pages/_internal'. Are you sure?",
                                                     default=False, auto_enter=False, qmark=DEFAULT_QMARK, style=custom_style).unsafe_ask()
 
                     # Abort if not confirmed
