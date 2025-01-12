@@ -9,6 +9,9 @@
 # repo_url: ""
 # repo_name: ""
 
+# Configuration
+docs_dir: "pages" # Default: 'docs'
+
 # Extra variables
 extra:
   # Version numbers
@@ -156,10 +159,10 @@ plugins:
       print_page_title: "Print Site"
       # Helpful banner for explaining how to print (will be removed from final pdf)
       add_print_site_banner: true
-      print_site_banner_template: "docs/_internal/templates/custom_banner.tpl"
+      print_site_banner_template: "pages/_internal/templates/custom_banner.tpl"
       # Cover page
       add_cover_page: true
-      cover_page_template: "docs/_internal/templates/custom_cover_page.tpl"
+      cover_page_template: "pages/_internal/templates/custom_cover_page.tpl"
       # Table of contents
       add_table_of_contents: true
       toc_title: "Table of Contents"

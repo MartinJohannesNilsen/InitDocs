@@ -3,4 +3,4 @@ dist
 build
 .venv
 *.egg-info
-/docs
+/pages
