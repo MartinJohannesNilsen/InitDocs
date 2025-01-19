@@ -127,6 +127,7 @@ plugins:
         - read_json
         - read_yaml
         - read_excel
+        - read_raw
   - awesome-pages:
       filename: .pages
       collapse_single_pages: true
