@@ -1668,7 +1668,9 @@ that \(f(a)=f(b)\).
 
 ### Tables
 
-#### Default
+#### Markdown Tables
+
+##### Default
 
 | Method   | Description                          |
 | -------- | ------------------------------------ |
@@ -1684,7 +1686,7 @@ that \(f(a)=f(b)\).
         | `PUT`    | :material-check-all: Update resource |
         | `DELETE` | :material-close:     Delete resource |
 
-#### Alignment
+##### Alignment
 
 === "Left"
 
@@ -1742,6 +1744,48 @@ that \(f(a)=f(b)\).
         |    `PUT` | :material-check-all: Update resource |
         | `DELETE` | :material-close:     Delete resource |
         ```
+
+#### Table Reader
+
+Larger tables can be stored in separate files and imported on the page using the table reader plugin.
+
+The supported formats are CSV, JSON, YAML, XLS/XLSX and Markdown.
+
+??? example "Code"
+
+      > Each of the following functions take one argument, being the path to the table, e.g. "assets/tables/table.csv".
+
+      **CSV**
+
+      ```bash
+      {{ read_csv() }}
+      ```
+
+      **JSON**
+
+      ```bash
+      {{ read_json() }}
+      ```
+
+      **YAML**
+
+      ```bash
+      {{ read_yaml() }}
+      ```
+
+      **XLS / XSLX**
+
+      ```bash
+      {{ read_excel() }}
+      ```
+
+      **Markdown**
+
+      > While you would logically think to save a markdown table in a `.md` file, this would probably make it render as a documentation page. Therefore, it is recommended to use a different file format, e.g. `.txt` or `.raw`.
+
+      ```bash
+      {{ read_raw() }}
+      ```
 
 ### Text
 
