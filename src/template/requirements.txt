@@ -1,13 +1,13 @@
 # Main
-mkdocs
-mkdocs-material # Material theming and extensions
+mkdocs==1.6.1 # Static site generator
+mkdocs-material==9.5.50 # Material theming and extensions
 # mkdocs-material[imaging] # Imaging extras for social plugin
 
 # Plugins
-mkdocs-awesome-pages-plugin # Enhanced configuration of page structuring
-mkdocs-git-revision-date-localized-plugin # Revision date for each page
-mkdocs-minify-plugin # Minify built HTML
-mkdocs-glightbox # Lightbox
-mkdocs-print-site-plugin # Print page
-mkdocs-kroki-plugin # Diagrams through Kroki
-mkdocs-table-reader-plugin # Read table from file (.csv, .xlsx, .yaml, .tsv, .json)
+mkdocs-awesome-pages-plugin==2.10.1 # Enhanced configuration of page structuring
+mkdocs-git-revision-date-localized-plugin==1.3.0 # Revision date for each page
+mkdocs-minify-plugin==0.8.0 # Minify built HTML
+mkdocs-glightbox==0.4.0 # Lightbox
+mkdocs-print-site-plugin==2.6.0 # Print page
+mkdocs-kroki-plugin==0.9.0 # Diagrams through Kroki
+mkdocs-table-reader-plugin==3.1.0 # Read table from file (.csv, .xlsx, .yaml, .tsv, .json)
