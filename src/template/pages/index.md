@@ -16,7 +16,7 @@ This project was generated with [InitDocs](https://github.com/MartinJohannesNils
 
 ### General
 
-The documentation is rendered based on the markdown files found in the `pages` folder, located at the same level as the configuration file named `mkdocs.yaml`. To get started writing pages, it could be beneficial to take a look at the page for [Referencere Implementations](/section1.reference/index.html), which describes the plethora of components available, and code examples of how to utilize them. Finally, it is important that each markdown file starts with a `h1` header (`# <header>`) for successful rendering.
+The documentation is rendered based on the markdown files found in the `pages` folder, located at the same level as the configuration file named `mkdocs.yaml`. To get started writing pages, it could be beneficial to take a look at the page for [Referencere Implementations](/section1.reference/index.md), which describes the plethora of components available, and code examples of how to utilize them. Finally, it is important that each markdown file starts with a `h1` header (`# <header>`) for successful rendering.
 
 ### Structure
 
