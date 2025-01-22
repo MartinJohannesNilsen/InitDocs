@@ -714,7 +714,22 @@ Can also be embedded in other components, such as admonitions (callouts)
 
 This project support diagrams through Kroki. To see a full list of reference diagrams, refer to the [Kroki example page](https://kroki.io/examples.html). You might also want to [read more](https://pypi.org/project/mkdocs-kroki-plugin/) about the plugin we have used as well.
 
-For rendering diagrams, simply use code fences (code block syntax) with a tag in the format `kroki-<module>`. To find the correct module, refer to the diagram type subtitles on the [example page](https://kroki.io/examples.html), and remember to write it in lowercase. You can also add optional [diagram options](https://docs.kroki.io/kroki/setup/diagram-options/).
+For rendering diagrams, simply use code fences (code block syntax) with a tag in the format `kroki-[module]`. To find the correct module, refer to the diagram type subtitles on the [example page](https://kroki.io/examples.html), and remember to write it in lowercase. You can also add optional [diagram options](https://docs.kroki.io/kroki/setup/diagram-options/).
+
+`kroki-<module>`:
+
+```kroki-blockdiag
+```kroki-
+‎Insert diagram code
+‎```
+```
+
+Finally, remember that you can save the diagram in a file and import using the `@from_file:[path]` directive:
+
+
+    ```kroki-
+    @from_file:path/to/diagram.<module>
+    ```
 
 #### Block Diagrams
 
@@ -733,6 +748,8 @@ blockdiag {
 
 ??? example "Code"
 
+    Inside a `kroki-blockdiag` code block:
+
         blockdiag {
           blockdiag -> generates -> "block-diagrams";
           blockdiag -> is -> "very easy!";
@@ -742,6 +759,36 @@ blockdiag {
           "very easy!" [color = "orange"];
         }
 
+
+#### Gantt Diagrams
+
+`kroki-mermaid`:
+
+```kroki-mermaid
+gantt
+    title A Gantt Diagram
+    dateFormat  YYYY-MM-DD
+    section Section
+    A task           :a1, 2014-01-01, 30d
+    Another task     :after a1, 20d
+    section Another
+    Task in sec      :2014-01-12, 12d
+    another task     :24d
+```
+
+??? example "Code"
+
+    Inside a `kroki-mermaid` code block:
+
+        gantt
+            title A Gantt Diagram
+            dateFormat  YYYY-MM-DD
+            section Section
+            A task           :a1, 2014-01-01, 30d
+            Another task     :after a1, 20d
+            section Another
+            Task in sec      :2014-01-12, 12d
+            another task     :24d
 
 #### Network Diagrams
 
@@ -767,6 +814,8 @@ nwdiag {
 ```
 
 ??? example "Code"
+
+    Inside a `kroki-nwdiag` code block:
 
         nwdiag {
           network dmz {
@@ -816,6 +865,8 @@ arrow from C6 to C3P chop
 
 ??? example "Code"
 
+    Inside a `kroki-pikchr` code block:
+
         scale = 0.8
         fill = white
         linewid *= 0.5
@@ -860,6 +911,8 @@ Person *--1 Location
 
 ??? example "Code"
 
+    Inside a `kroki-erd` code block:
+
         [Person]
         *name
         height
@@ -896,6 +949,8 @@ rectangle checkout {
 ```
 
 ??? example "Code"
+
+    Inside a `kroki-plantuml` code block:
 
         @startuml
         left to right direction
@@ -936,6 +991,8 @@ rectangle checkout {
 
 ??? example "Code"
 
+    Inside a `kroki-nomnoml` code block:
+
         [<abstract>Marauder]<:--[Pirate]
         [Pirate]- 0..7[mischief]
         [jollyness]->[Pirate]
@@ -973,6 +1030,8 @@ sequenceDiagram
 
 ??? example "Code"
 
+    Inside a `kroki-mermaid` code block:
+
         sequenceDiagram
           participant Alice
           participant Bob
@@ -999,6 +1058,8 @@ seqdiag {
 ```
 
 ??? example "Code"
+
+    Inside a `kroki-seqdiag` code block:
 
         seqdiag {
           browser  -> webserver [label = "GET /index.html"];
@@ -1095,6 +1156,8 @@ seqdiag {
 ```
 
 ??? example "Code"
+
+    Inside a `kroki-vega` code block:
 
         {
           "$schema": "https://vega.github.io/schema/vega/v5.json",
@@ -1224,31 +1287,16 @@ We can create grids by encapsulate elements in a `<div>` tag, with `class="grid"
 
 <div class="grid" markdown>
 
-=== "Unordered list"
+!!! tip "Generic grids"
 
-    * Sed sagittis eleifend rutrum
-    * Donec vitae suscipit est
-    * Nulla tempor lobortis orci
+    Did you know you could place elements in a grid?
 
-=== "Ordered list"
+```console 
+!!! tip "Generic grids"
 
-    1. Sed sagittis eleifend rutrum
-    2. Donec vitae suscipit est
-    3. Nulla tempor lobortis orci
-
-``` title="Content tabs"
-=== "Unordered list"
-
-    * Sed sagittis eleifend rutrum
-    * Donec vitae suscipit est
-    * Nulla tempor lobortis orci
-
-=== "Ordered list"
-
-    1. Sed sagittis eleifend rutrum
-    2. Donec vitae suscipit est
-    3. Nulla tempor lobortis orci
+    Did you know you could place elements in a grid?
 ```
+  
 
 </div>
 
@@ -1256,31 +1304,16 @@ We can create grids by encapsulate elements in a `<div>` tag, with `class="grid"
 
         <div class="grid" markdown>
 
-        === "Unordered list"
+        !!! tip "Generic grids"
 
-            * Sed sagittis eleifend rutrum
-            * Donec vitae suscipit est
-            * Nulla tempor lobortis orci
+            Did you know you could place elements in a grid?
 
-        === "Ordered list"
+        ```console 
+        !!! tip "Generic grids"
 
-            1. Sed sagittis eleifend rutrum
-            2. Donec vitae suscipit est
-            3. Nulla tempor lobortis orci
-
-        ``` title="Content tabs"
-        === "Unordered list"
-
-            * Sed sagittis eleifend rutrum
-            * Donec vitae suscipit est
-            * Nulla tempor lobortis orci
-
-        === "Ordered list"
-
-            1. Sed sagittis eleifend rutrum
-            2. Donec vitae suscipit est
-            3. Nulla tempor lobortis orci
+            Did you know you could place elements in a grid?
         ```
+          
 
         </div>
 
@@ -1387,6 +1420,7 @@ Define each card in a list. By including `markdown` in the `<div>` tag, we can u
             [:octicons-arrow-right-24: License](#)
 
         </div>
+
 
 
 

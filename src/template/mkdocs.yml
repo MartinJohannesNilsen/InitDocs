@@ -118,9 +118,7 @@ plugins:
   - git-revision-date-localized:
       fallback_to_build_date: true
   - table-reader:
-      base_path: "docs_dir" # "config_dir" or "docs_dir"
       data_path: "." # Define base path to a folder to look in, default is "."
-      search_page_directory: True
       allow_missing_files: False
       select_readers:
         - read_csv
