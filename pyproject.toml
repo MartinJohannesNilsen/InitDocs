@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "InitDocs"
-version = "1.0.0"
+version = "1.1.5"
 authors = [{name = "Martin Johannes Nilsen", email = "martinjnilsen@gmail.com"}]
 description = "A command line tool for initializing documentation projects based on MkDocs."
-readme = "README.md"
+readme = "readme.md"
 #license = {text = "MIT"}
 keywords = ["documentation", "markdown", "cli", "template", "python", "mkdocs"]
 classifiers = [
@@ -30,6 +30,6 @@ build = [
 
 
 [project.urls]
+documentation = "https://initdocs.mjntech.dev/"  # Optional: documentation URL
+repository = "https://github.com/MartinJohannesNilsen/InitDocs/"  # Optional: repository URL
 # homepage = ""  # Optional: homepage URL
-# documentation = ""  # Optional: documentation URL
-# repository = ""  # Optional: repository URL
