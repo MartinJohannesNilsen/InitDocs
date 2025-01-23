@@ -57,18 +57,18 @@ The process of building and serving this documentation has been made quite simpl
 
 ##### Building
 
-If you want to build the project into static files, you can utilize the service `docs-build`. Before running the command, you should ensure that your working directory is set to the documentation project being where you find `docker-compose.yaml`, `mkdocs.yml` and the `pages` folder. To verify, print `ls` in your terminal and these should be among the listed items. To build, we can use the docker service by running the following command:
+If you want to build the project into static files, you can utilize the service `docs-build`. Before running the command, you should ensure that your working directory is set to the documentation project being where you find `docker-compose.yaml`, `mkdocs.yml` and the `pages` folder. To verify, print `ls` in your terminal and these should be among the listed items. To build, we can run an ephemeral container which builds a static site as follows:
 
 ```
-docker compose up docs-build
+docker compose run --rm docs-build
 ```
 
-This will simply:
+This command will:
 
-- Build the Docker image (only at first run, image is saved) with required packages
-- Run a container building your documentation into a folder named `site`. 
+- If not run before, build the Docker Image from the instructions in the `dockerfile`
+- Run an ephemeral container which builds your documentation and place the static site in a directory named `site`. 
 
-When built, the `index.html` file inside this directory can be served, for example through a `Live Server` or `Live Preview` extension in Visual Studio Code.
+When built, the `index.html` file inside this directory can be served, for example through a reverse proxy like `nginx`, or a `Live Server`/`Live Preview` extension in Visual Studio Code.
 
 ##### Serving
 
@@ -114,7 +114,7 @@ python -m mkdocs serve
   
 ##### Build Static Site
 
-Build the documentation site to dir `site`.
+Build a static documentation site, where the files are generated in a new directory named `site`.
 
 ```
 python -m mkdocs build
