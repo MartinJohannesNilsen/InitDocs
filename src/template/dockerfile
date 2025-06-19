@@ -1,15 +1,22 @@
-FROM python:3.11-slim
+# Dockerfile for MkDocs with Python 3.13.3 on Alpine Linux
+FROM python:3.13.5-alpine
 
-RUN apt-get update -y && apt-get upgrade -y && apt-get install git -y
+# Add git
+RUN apk --no-cache add git
 
+# Set working directory
 WORKDIR /documentation
 
+# Install requirements
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy files
 COPY . .
 
+# Expose port
 EXPOSE 8000
 
+# Run application
 ENTRYPOINT [ "python", "-m", "mkdocs" ]
 CMD ["--help"]
