@@ -1,7 +1,7 @@
 # This is based on the official workflow from the MkDocs Material docs, available here:
 # https://squidfunk.github.io/mkdocs-material/publishing-your-site/#with-github-actions
 # Note that this use the classic Pages approach of generating a new `gh-pages` branch, and building asynchronously
-
+# This method is deprecated and kept for reference only.
 name: Build and Push to 'gh-pages' Branch
 
 on:
