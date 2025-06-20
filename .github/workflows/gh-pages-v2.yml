@@ -1,12 +1,10 @@
-# This was actually sleeker as no extra branches was made, and is supposedly the better newer approach according to GitHub.
-# I do experience the template not being rendered correctly, some CSS/JSS going wrong. Have no issues with this locally, and tried other hosting services - neither reproduced there.
-# Solution: Skip GitHub Pages and host using own public server
-
+# This workflow builds the documentation using Docker and deploys it to GitHub Pages.
+# New approach using GitHub Pages Actions, which is more efficient and does not require a separate `gh-pages` branch.
 name: Build and Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["replace_with_main_if_in_use"]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -24,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Edit mkdocs.yml
         run: |
@@ -40,7 +38,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Cache Docker layers
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
@@ -53,7 +51,7 @@ jobs:
           docker compose up docs-build
 
       - name: Upload built docs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: built-docs
           path: ./src/template/site
@@ -70,7 +68,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download built docs
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: built-docs
           path: ./src/template/site

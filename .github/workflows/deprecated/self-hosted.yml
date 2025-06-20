@@ -1,5 +1,5 @@
-# Neither this approach seem to build it correctly. The output differs when building the site in CI vs locally.
-
+# Tried both GitHub Actions methods and self-hosted deploy; all yield broken sites (likely CSS/JS errors).
+# This method is deprecated and kept for reference only.
 name: Build and Deploy to Public Server
 
 on:
