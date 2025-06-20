@@ -1,4 +1,4 @@
-# Dockerfile for MkDocs with Python 3.13.3 on Alpine Linux
+# Dockerfile for MkDocs with Python 3.13.5 on Alpine Linux
 FROM python:3.13.5-alpine
 
 # Add git
