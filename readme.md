@@ -26,102 +26,100 @@ options:
 
 ## Installation
 
-To be able to use the command line tool, we would need to get access to the executable program. As of now, we build executables for MacOS (arm), Windows and Linux (Ubuntu). If none of these works for you, you may build the executable yourself - which will be described further down.
+### UNIX (Linux and macOS)
 
-## Using Released Executable
+The script detects your OS, downloads the latest release to `~/.local/bin`, and adds it to your PATH:
 
-After having downloaded the correct executable, and placed it in a location of your choice, we should make it available in your terminal.
-
-The very first step you will have to take is to make it executable. This might not be necessary, but in most cases it would. This can be done by appending the execute permission to the file as such:
-
-```bash
-chmod +x initdocs
+```sh
+curl -fsSL "https://raw.githubusercontent.com/martinjnilsen/initdocs/main/scripts/install.sh" | sh
 ```
 
-> On MacOS, you will probably also need to allow the use of it in the privacy and security settings. This will be prompted when run for the first time.
+Supports Linux and macOS (arm).
 
-Then, we would like to ensure that your terminal recognizes the application, regardless of working directory. For this, the simplest approach is to create an alias to the executable in your shell configuration file (UNIX systems). For Windows users, you can append the path to the executable in your environment variables, or just [start using WSL already](https://blog.mjntech.dev/posts/oLQQE3ruoZyCaASbwtqK#First_Step:_Make_Sure_You_Have_Zsh_Installed_and_Set_as_Default_Shell).
-
-First, we need to grab the path to the directory of the executable. This name or path does not matter, but we rename the executable to `initdocs[.exe]` out of preference. For getting the path, you can utilize the `pwd` command in your terminal to print the absolute path of your current working directory.
-
-Then, in you shell configuration file (e.g. .zshrc or .bashrc), you would like to add an alias in the format of 
-
-```
-export initdocs=<abs_path_to_executable>
-```
-where initdocs will be the command name. After saving the file, you can open a new terminal, or reset the current one by sourcing the configuration file: 
-
-```bash
-# Source UNIX shell config
-source .[bash/zsh][rc/_profile]
-```
-
-
-## Build Executable
-
-For simplicity, we provide a makefile with predefined commands for setting up a Python virtual environment, installing dependencies and building a wheel or executable. 
-
-To build an executable for your system, simply use the following command:
-
-```bash
-make executable
-```
+> **macOS Intel:** No native binary is available. The script will prompt you to try the Linux binary as a fallback.
 
 <details>
-<summary>No access to make on your operating system?</summary>
+<summary>More options — specific version, dry run, and manual inspection</summary>
 
-<br/>
+**Install a specific version:**
 
-You can run the commands directly instead. If you are using virtual environments, the only part that is not OS-agnostic is the activation of the venv.
-
-**Step 1a. Setup Venv in UNIX (macos/linux/wsl)**
-```bash
-# Create virtual environment
-python -m venv .venv
-
-# Activate venv
-source .venv/bin/activate
+```sh
+curl -fsSL "https://raw.githubusercontent.com/martinjnilsen/initdocs/main/scripts/install.sh" | sh -s -- --release v1.1.6
 ```
 
-**Step 1b. Setup Venv in Windows Powershell**
-```bash
-# Create virtual environment
-python -m venv .venv
+**Preview what the script will do without making any changes:**
 
-# Activate venv
-.\.venv\Scripts\activate.ps1
+```sh
+curl -fsSL "https://raw.githubusercontent.com/martinjnilsen/initdocs/main/scripts/install.sh" | sh -s -- --dry-run
 ```
 
-**Step 1b. Setup Venv in Windows CMD**
-```bash
-# Create virtual environment
-python -m venv .venv
+**Download and inspect the script before running it:**
 
-# Activate venv
-.\.venv\Scripts\activate
+```sh
+curl -fsSL "https://raw.githubusercontent.com/martinjnilsen/initdocs/main/scripts/install.sh" -o install.sh
+# Review install.sh, then run with any flags:
+sh install.sh                        # normal install (latest)
+sh install.sh --release v1.1.6       # install a specific version
+sh install.sh --dry-run              # preview only
+sh install.sh --verbose              # print every step
+sh install.sh --debug                # print debug output
+sh install.sh help                   # show help
 ```
 
-**Step 2. Make Executable**
-```bash
-# Install dependencies
-pip install --upgrade pip setuptools wheel
-pip install --require-virtualenv ".[build]"
-
-# Build wheel
-python -m build
-
-# Build executable
-pyinstaller initdocs.spec
-```
+> **What does `sh -s -- <args>` mean?**
+>
+> - `-s` tells sh to read the script from stdin (the pipe) rather than a file.
+> - `--` marks the end of sh's own options — everything after it is passed as arguments to the script itself.
+> - Without `--`, a flag like `--dry-run` could be misinterpreted as a sh option rather than a script argument.
 
 </details>
-<br/>
 
-The executable will be created in the `dist` directory. Now you may follow the steps described in the prior subsection for adding an alias to you shell configuration file.
+### Windows
+
+Use the PowerShell installer:
+
+```powershell
+irm "https://raw.githubusercontent.com/martinjnilsen/initdocs/main/scripts/install.ps1" | iex
+```
+
+> **WSL or Git Bash?** Use the UNIX `curl` command above instead — it will install the Linux binary.
+
+<details>
+<summary>More options — specific version, dry run, and manual inspection</summary>
+
+**Install a specific version:**
+
+```powershell
+& ([scriptblock]::Create((irm "https://raw.githubusercontent.com/martinjnilsen/initdocs/main/scripts/install.ps1"))) -Release v1.1.6
+```
+
+**Preview what the script will do without making any changes:**
+
+```powershell
+& ([scriptblock]::Create((irm "https://raw.githubusercontent.com/martinjnilsen/initdocs/main/scripts/install.ps1"))) -DryRun
+```
+
+**Download and inspect the script before running it:**
+
+```powershell
+Invoke-WebRequest "https://raw.githubusercontent.com/martinjnilsen/initdocs/main/scripts/install.ps1" -OutFile install.ps1
+# Review install.ps1, then run with any flags:
+.\install.ps1                        # normal install (latest)
+.\install.ps1 -Release v1.1.6        # install a specific version
+.\install.ps1 -DryRun                # preview only
+.\install.ps1 -Verbose               # print every step
+```
+
+> **Note:** Running a downloaded `.ps1` requires execution policy to allow local scripts:
+> `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+> The `irm | iex` method above does not require this.
+
+</details>
+
 
 ## Further Development
 
-> We highly recommend developing in a UNIX environment. For Windows users, this yields a fantastic opportunity to get familiar with WSL. If you want some help getting started, I have written a post on the subject, available [here](https://blog.mjntech.dev/posts/oLQQE3ruoZyCaASbwtqK#First_Step:_Make_Sure_You_Have_Zsh_Installed_and_Set_as_Default_Shell).
+> We highly recommend developing in a UNIX environment. For Windows users, this yields a fantastic opportunity to get familiar with WSL. If you want some help getting started, I have written a post on the subject, available [here](https://blog.mjnlab.com/posts/terminal-essentials-a-step-by-step-setup-and-usage-tutorial#First_Step:_Make_Sure_You_Have_Zsh_Installed_and_Set_as_Default_Shell).
 
 ### Configure Virtual Environment With Dependencies
 
@@ -158,6 +156,72 @@ To test your changes before building the executable, ensure that the script runs
 python src/initdocs
 ```
 
+### Build Executable
+
+For simplicity, we provide a makefile with predefined commands for setting up a Python virtual environment, installing dependencies and building a wheel or executable.
+
+To build an executable for your system, simply use the following command:
+
+```bash
+make executable
+```
+
+<details>
+<summary>No access to make on your operating system?</summary>
+
+<br/>
+
+You can run the commands directly instead. If you are using virtual environments, the only part that is not OS-agnostic is the activation of the venv.
+
+**Step 1a. Setup Venv in UNIX (macos/linux/wsl)**
+
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate venv
+source .venv/bin/activate
+```
+
+**Step 1b. Setup Venv in Windows Powershell**
+
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate venv
+.\.venv\Scripts\activate.ps1
+```
+
+**Step 1c. Setup Venv in Windows CMD**
+
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate venv
+.\.venv\Scripts\activate
+```
+
+**Step 2. Make Executable**
+
+```bash
+# Install dependencies
+pip install --upgrade pip setuptools wheel
+pip install --require-virtualenv ".[build]"
+
+# Build wheel
+python -m build
+
+# Build executable
+pyinstaller initdocs.spec
+```
+
+</details>
+<br/>
+
+The executable will be created in the `dist` directory. Move it to `~/.local/bin/` (or any directory on your `PATH`), then run `initdocs --help` to verify.
+
 ## Alter the template
 
 To effectively modify the template, it's helpful to view the changes in real time. This can be achieved by serving the template through the dedicated Docker Compose service. The only step needed is to uncomment the `site_name` in the `src/template/mkdocs.yml`, as this must be defined.
@@ -172,7 +236,3 @@ sed -i "s/# site_name: \"\"/site_name: \"Template\"/" mkdocs.yml
 # Run docker compose service: docs-serve
 docker compose up docs-serve -d
 ```
-
-## License
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/MartinJohannesNilsen/InitDocs/?tab=License-1-ov-file)
