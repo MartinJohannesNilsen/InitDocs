@@ -1,6 +1,6 @@
 # Welcome
 
-This project was generated with [InitDocs](https://github.com/MartinJohannesNilsen/InitDocs), which aims to easily configure an MkDocs project based on the feature-rich [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) template/extension. This allows you to focus on writing the `markdown` files, while the system takes care of rendering the documentation site.
+This project was generated with [initdocs](https://github.com/martinjohannesnilsen/initdocs), which aims to easily configure an MkDocs project based on the feature-rich [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) template/extension. This allows you to focus on writing the `markdown` files, while the system takes care of rendering the documentation site.
 
 ## Features
 
@@ -16,7 +16,7 @@ This project was generated with [InitDocs](https://github.com/MartinJohannesNils
 
 ### General
 
-The documentation is rendered based on the markdown files found in the `pages` folder, located at the same level as the configuration file named `mkdocs.yaml`. To get started writing pages, it could be beneficial to take a look at the page for [Referencere Implementations](/section1.reference/index.md), which describes the plethora of components available, and code examples of how to utilize them. Finally, it is important that each markdown file starts with a `h1` header (`# <header>`) for successful rendering.
+The documentation is rendered based on the markdown files found in the `pages` folder, located at the same level as the configuration file named `mkdocs.yaml`. To get started writing pages, it could be beneficial to take a look at the page for [Reference Implementations](/section1.reference/index.md), which describes the plethora of components available, and code examples of how to utilize them. Finally, it is important that each markdown file starts with a `h1` header (`# <header>`) for successful rendering.
 
 ### Structure
 
@@ -47,7 +47,7 @@ Verify that you have Docker installed:
 docker --version
 ```
 
-If not installed, please head over to this [blog post](https://blog.mjntech.dev/posts/Y3YTh9D6676D4n6iUYlU) to get acquainted with Docker.
+If not installed, please head over to this [blog post](https://blog.mjnlab.com/posts/containerization-made-easy-an-introduction-to-docker) to get acquainted with Docker.
 
 Please also ensure that Docker is running.
 
@@ -86,7 +86,7 @@ docker compose up docs-serve
 
 #### Python and PiP
 
-First, ensure you have Python and PiP installed. This can be checked by the commands `python --version` and `pip --version`. If not installed, it is recommendended to install both through Pyenv ([blog post](https://blog.mjntech.dev/posts/7FPz65Fkv8sHM3aDIx0r)), but MkDocs also has a [guide on installation](https://www.mkdocs.org/user-guide/installation/).
+First, ensure you have Python and PiP installed. This can be checked by the commands `python --version` and `pip --version`. If not installed, please take a look at this ([blog post](https://blog.mjnlab.com/posts/mastering-python-environments)) to learn more about configuring Python environments, but MkDocs also has a [guide on installation](https://www.mkdocs.org/user-guide/installation/).
 
 #### (Optional) Virtual Environment
 
