@@ -519,7 +519,7 @@ def cli():
 # Main
 def main(path: Path, dir_name: str, print_config: bool):
     """The main flow of the initdocs program"""
-    print("\nWelcome to InitDocs!")
+    print("\nWelcome to initdocs!")
 
     # Ask for path if not given
     if not path:

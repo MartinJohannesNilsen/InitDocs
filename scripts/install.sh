@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
-# InitDocs install script
-# Downloads the latest InitDocs binary to ~/.local/bin and adds it to your PATH.
+# initdocs install script
+# Installs initdocs via uv (preferred) or downloads a standalone binary as fallback.
 # Usage: curl -fsSL "https://raw.githubusercontent.com/martinjnilsen/initdocs/main/scripts/install.sh" | sh
 
 set -eu
@@ -13,24 +13,27 @@ VERBOSE=false
 DEBUG=false
 DRY_RUN=false
 RELEASE_TAG=""
+STANDALONE=false
 
 # ── Flags ─────────────────────────────────────────────────────────────────────
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    --verbose) VERBOSE=true ;;
-    --debug)   DEBUG=true ;;
-    --dry-run) DRY_RUN=true ;;
+    --verbose)    VERBOSE=true ;;
+    --debug)      DEBUG=true ;;
+    --dry-run)    DRY_RUN=true ;;
+    --standalone) STANDALONE=true ;;
     --release)
       [ $# -ge 2 ] || { printf "[error] --release requires a tag argument (e.g. --release v1.1.6)\n\n"; exit 1; }
       RELEASE_TAG="$2"
       shift
       ;;
     help)
-      printf "Usage: sh install.sh [--verbose] [--debug] [--dry-run] [--release <tag>] [help]\n\n"
+      printf "Usage: sh install.sh [--verbose] [--debug] [--dry-run] [--standalone] [--release <tag>] [help]\n\n"
       printf "  --verbose          Print all steps and output during installation.\n"
       printf "  --debug            Print debug information for troubleshooting.\n"
       printf "  --dry-run          Preview what would happen without making any changes.\n"
+      printf "  --standalone       Skip uv and use the standalone binary installer directly.\n"
       printf "  --release <tag>    Install a specific release (e.g. --release v1.1.6).\n"
       printf "                     Defaults to the latest release.\n"
       printf "  help               Show this help message.\n\n"
@@ -68,9 +71,38 @@ run() {
   fi
 }
 
-debug "Flags: VERBOSE=$VERBOSE DEBUG=$DEBUG DRY_RUN=$DRY_RUN RELEASE_TAG=${RELEASE_TAG:-<latest>}"
+debug "Flags: VERBOSE=$VERBOSE DEBUG=$DEBUG DRY_RUN=$DRY_RUN STANDALONE=$STANDALONE RELEASE_TAG=${RELEASE_TAG:-<latest>}"
 
 $DRY_RUN && printf "[dry-run] Previewing installation — no changes will be made.\n\n"
+
+# ── uv detection ─────────────────────────────────────────────────────────────
+
+if ! $STANDALONE && command -v uv >/dev/null 2>&1; then
+  debug "uv found at: $(command -v uv)"
+
+  if [ -n "$RELEASE_TAG" ]; then
+    VERSION=$(printf "%s" "$RELEASE_TAG" | sed 's/^v//')
+    PACKAGE="initdocs==$VERSION"
+  else
+    PACKAGE="initdocs"
+  fi
+
+  cmd "Installing $PACKAGE via uv tool install..."
+  if $DRY_RUN; then
+    dryrun "Would run: uv tool install $PACKAGE"
+    printf "\n[dry-run] Preview complete. Run without --dry-run to install.\n"
+  else
+    uv tool install "$PACKAGE"
+    printf "\n[info] initdocs installed via uv.\n"
+    printf "[info] Run: initdocs --help\n\n"
+  fi
+  exit 0
+fi
+
+if ! $STANDALONE; then
+  warning "uv not found. Falling back to standalone binary installer."
+  printf "\n"
+fi
 
 # ── Preflight ─────────────────────────────────────────────────────────────────
 

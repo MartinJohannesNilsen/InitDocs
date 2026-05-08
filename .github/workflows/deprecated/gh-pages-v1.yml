@@ -29,10 +29,10 @@ jobs:
         run: |
           year=$(date +'%Y')
           sed -i "s/# site_name: \"\"/site_name: \"Template\"/" ./src/template/mkdocs.yml
-          sed -i "s/# site_description: \"\"/site_description: \"Served template of InitDocs\"/" ./src/template/mkdocs.yml
+          sed -i "s/# site_description: \"\"/site_description: \"Served template of initdocs\"/" ./src/template/mkdocs.yml
           sed -i "s/# site_author: \"\"/site_author: \"Martin Johannes Nilsen\"/" ./src/template/mkdocs.yml
           sed -i "s/# copyright: \"\"/copyright: \"Copyright \&copy; $year Martin Johannes Nilsen\"/" ./src/template/mkdocs.yml
-          sed -i "s|# site_url: \"\"|site_url: \"https://martinjohannesnilsen.github.io/initdocs/\"|" ./src/template/mkdocs.yml
+          sed -i "s|# site_url: \"\"|site_url: \"https://martinjnilsen.github.io/initdocs/\"|" ./src/template/mkdocs.yml
           cat ./src/template/mkdocs.yml
 
       - name: Configure Git Credentials

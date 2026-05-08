@@ -1,8 +1,8 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-    InitDocs install script for Windows.
-    Downloads the latest InitDocs .exe to $HOME\.local\bin and adds it to your PATH.
+    initdocs install script for Windows.
+    Downloads the latest initdocs .exe to $HOME\.local\bin and adds it to your PATH.
 .PARAMETER Release
     Install a specific release tag (e.g. v1.1.6). Defaults to the latest release.
 .PARAMETER DryRun

@@ -1,9 +1,9 @@
 
-# InitDocs
+# initdocs
 
 <img src="https://i.ibb.co/S3mbGrB/Init-Docs-HD-720p-3.gif" width="600"/>
 
-Welcome to InitDocs - a command line tool for initializing and managing documentation projects based on [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).
+Welcome to initdocs - a command line tool for initializing and managing documentation projects based on [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).
 
 ## Usage
 

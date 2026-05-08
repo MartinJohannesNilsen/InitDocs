@@ -8,17 +8,17 @@ On this page, you can find a plethora of blocks to use when writing your documen
 
 #### Markdown links
 
-[This is a regular markdown link](https://github.com/martinjohannesnilsen/initdocs)
+[This is a regular markdown link](https://github.com/martinjnilsen/initdocs)
 
 ??? example "Code"
 
-        [This is a regular markdown link](https://github.com/martinjohannesnilsen/initdocs)
+        [This is a regular markdown link](https://github.com/martinjnilsen/initdocs)
 
 #### HTML Anchor links
 
 ##### Replace Current Path
 
-<a href="https://github.com/martinjohannesnilsen/initdocs">This is a regular html anchor, which will be opened in the current tab</a>
+<a href="https://github.com/martinjnilsen/initdocs">This is a regular html anchor, which will be opened in the current tab</a>
 
 ??? example "Code"
 
@@ -26,7 +26,7 @@ On this page, you can find a plethora of blocks to use when writing your documen
 
 ##### Open In New Tab
 
-<a href="https://github.com/martinjohannesnilsen/initdocs" target="_blank">This is a link which will be opened in new tab</a>
+<a href="https://github.com/martinjnilsen/initdocs" target="_blank">This is a link which will be opened in new tab</a>
 
 ??? example "Code"
 
@@ -34,7 +34,7 @@ On this page, you can find a plethora of blocks to use when writing your documen
 
 ##### Download Link
 
-<a href="https://github.com/martinjohannesnilsen/initdocs/blob/main/readme.md" download>This is a download link</a>
+<a href="https://github.com/martinjnilsen/initdocs/blob/main/readme.md" download>This is a download link</a>
 
 ??? example "Code"
 

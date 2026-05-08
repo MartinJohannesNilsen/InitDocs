@@ -1,6 +1,6 @@
 # Welcome
 
-This project was generated with [initdocs](https://github.com/martinjohannesnilsen/initdocs), which aims to easily configure an MkDocs project based on the feature-rich [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) template/extension. This allows you to focus on writing the `markdown` files, while the system takes care of rendering the documentation site.
+This project was generated with [initdocs](https://github.com/martinjnilsen/initdocs), which aims to easily configure an MkDocs project based on the feature-rich [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) template/extension. This allows you to focus on writing the `markdown` files, while the system takes care of rendering the documentation site.
 
 ## Features
 

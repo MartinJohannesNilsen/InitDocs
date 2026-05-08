@@ -3,8 +3,8 @@ requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "InitDocs"
-version = "1.1.6"
+name = "initdocs"
+version = "1.2.0"
 authors = [{name = "Martin Johannes Nilsen", email = "martinjnilsen@gmail.com"}]
 description = "A command line tool for initializing documentation projects based on MkDocs."
 readme = "readme.md"
@@ -30,6 +30,6 @@ build = [
 
 
 [project.urls]
-documentation = "https://initdocs.mjntech.dev/"  # Optional: documentation URL
-repository = "https://github.com/MartinJohannesNilsen/InitDocs/"  # Optional: repository URL
+documentation = "https://initdocs.mjnlab.com/"  # Optional: documentation URL
+repository = "https://github.com/martinjnilsen/initdocs/"  # Optional: repository URL
 # homepage = ""  # Optional: homepage URL
