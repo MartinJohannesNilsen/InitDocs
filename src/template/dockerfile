@@ -1,5 +1,5 @@
-# Dockerfile for MkDocs with Python 3.13.5 on Alpine Linux
-FROM python:3.13.5-alpine
+# Dockerfile for MkDocs with uv on Alpine Linux
+FROM ghcr.io/astral-sh/uv:python3.13-alpine
 
 # Add git
 RUN apk --no-cache add git
@@ -9,7 +9,7 @@ WORKDIR /documentation
 
 # Install requirements
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN uv pip install --system --no-cache -r requirements.txt
 
 # Copy files
 COPY . .

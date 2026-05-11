@@ -16,5 +16,5 @@ services:
     extends: docs-base
     ports:
       - "8000:8000"
-    command: ["serve", "-a", "0.0.0.0:8000"]
+    command: ["serve", "-a", "0.0.0.0:8000", "--livereload"]
     container_name: docs_serve

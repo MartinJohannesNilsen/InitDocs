@@ -84,55 +84,57 @@ docker compose up docs-serve
 
 ### Local Python Approach
 
-#### Python and PiP
+This project relies on Python and MkDocs for building and serving the documentation. If you prefer to run the project locally without Docker, you can do so by following the instructions below.
 
-First, ensure you have Python and PiP installed. This can be checked by the commands `python --version` and `pip --version`. If not installed, it is recommendended to install both through Pyenv ([blog post](https://blog.mjntech.dev/posts/7FPz65Fkv8sHM3aDIx0r)), but MkDocs also has a [guide on installation](https://www.mkdocs.org/user-guide/installation/).
+On the topic of Python and its environments, I recommend reading my [blog post on the subject](https://blog.mjnlab.com/posts/mastering-python-environments).
 
-#### (Optional) Virtual Environment
+> MkDocs also has an official [guide on installation](https://www.mkdocs.org/user-guide/installation/).
 
-It is recommended to use a virtual environment for installing the required Python packages. This can be setup with the command `python -m venv .venv`, and sourced (activated) with `source .venv/bin/activate`. If ran on Windows, although one should consider using WSL or Linux, the created directory will be named `/Scripts` instead of `/bin`. To deactivate, simply run `deactivate` in your terminal. Once sourced, all requirements will be installed to your virtual environment.
+#### uv (Recommended)
 
-#### Install Requirements
+[uv](https://docs.astral.sh/uv/) is a fast Python package manager that handles virtual environments automatically. Install it with:
 
-To install the requirements, run
-
-```
-pip install -r requirements.txt
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-We should now be able to build or run the documentation server!
+##### Install Requirements
 
-#### Commands
+Then install dependencies and run commands directly — no manual venv activation needed:
+
+```bash
+uv pip install -r requirements.txt
+```
 
 ##### Serve
 
 Start the live-reloading docs server, accessible at `localhost:8000` or `127.0.0.1:8000`.
 
+```bash
+uv run python -m mkdocs serve -a 0.0.0.0:8000 --livereload
 ```
-python -m mkdocs serve
-```
-  
+
 ##### Build Static Site
 
 Build a static documentation site, where the files are generated in a new directory named `site`.
 
-```
-python -m mkdocs build
+```bash
+uv run python -m mkdocs build
 ```
 
 ##### Print Help
 
 Print help message and exit.
 
-```
-python -m mkdocs --help
+```bash
+uv run python -m mkdocs --help
 ```
 
 ## Generate PDF
 
 If you want to generate a pdf file of the documentation, a single page render of the entire documentation project is made available at path `/print_page.html`. Either, you can navigate to this path and export/print yourself, or use the provided shell script for (1) building a static site and (2) generate the pdf using Docker. 
 
-For the latter, simply run the following command, given that Docker is installed:
+For the automated process, run the generation script simply run the following command, given that Docker is installed:
 
 ```bash
 bash generate_pdf.sh
